@@ -115,17 +115,17 @@ jobs:
           cache: "pnpm"
           cache-dependency-path: ./frontend/pnpm-lock.yaml 
 
-      - name: backend package 설치
+      - name: frontend package 설치
         working-directory: ./frontend
         run: pnpm install --frozen-lockfile
 
       # 프론트엔드 관련 환경변수 추가
-      - name: backend 환경변수 파일 추가 
+      - name: frontend 환경변수 파일 추가 
         working-directory: ./frontend
-        run: echo "${{ secrets.NODE_TOOL_BACKEND_LOCAL_ENV }}" > .env
+        run: echo "${{ secrets.NODE_FRONTEND_LOCAL_ENV }}" > .env
       
       # backend 단위 테스트 실행
-      - name: backend 단위테스트 실행
+      - name: frontend 단위테스트 실행
         working-directory: ./frontend
         run: pnpm test
 
@@ -136,7 +136,7 @@ jobs:
     needs: 
       - main-backend-test
       - tool-backend-test
-      # 나중에 프론트도 추가 - 테스트
+      - frontend-test
     
     steps:
       - name: Checkout docker
